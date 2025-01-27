@@ -5,4 +5,4 @@ With VH360°, we're looking to solve the problem of individuals losing touch wit
 We plan to integrate AI into VH360° for content moderation. Our goal is to share appropriate, safe memories, and we intend to use a video analysis tool, like TensorFlow or Hugging Face Transformers. While neither of us have exprience with these tools, we believe this goal is feasible because of the tools' popularity and widespread documentation. 
 
 ## Repository Navigation ##
-To view our project using this repository, simply...
+To view our project using this repository, simply fork a copy, go to the pages section in the settings, then set select the main branch and click visit site.
