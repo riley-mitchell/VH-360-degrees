@@ -1,4 +1,4 @@
-1. Define Goals and Features
+## Define Goals and Features ##
 Research Questions:
 What do you want users to accomplish on the site? (e.g., watch videos, upload content, share links, comment?)
 What key features will make it unique (e.g., tagging by events, personalized profiles)?
@@ -6,7 +6,7 @@ Actions:
 Look into similar platforms (e.g., YouTube, Vimeo, or school archives).
 We want users to be able to view videos that have been uploaded and post their own. Key features are things like being unique to Vernon Hills High School (proof of identity required, possibly google login), no monetization (we’re not after profit, it’s supposed to simply be an archive), and the lack of an algorithm because it’s going to be more of a file structure since it’s supposed to store as much information as possible. After looking at YouTube, Twitch, and Vimeo, we made a few key conclusions. We like the format of YouTube and Twitch, with each video showing up as a “box.” We’d like to replicate that on our site, without the algorithm of course. Additionally, Vimeo showed more of a file structure type of organization, which seemed beneficial for storing archive-like content. 
 
-2. Legal and Privacy Considerations
+## Legal and Privacy Considerations ##
 Research Questions:
 What are the privacy laws around hosting videos of minors (e.g., COPPA in the U.S.)?
 Do you need parental or individual consent to host certain content?
@@ -15,7 +15,7 @@ Research video-hosting legal requirements for minors.
 Look into Terms of Service and Privacy Policy templates for video-hosting sites.
 We can develop a privacy agreement that’s signed when users login to the website if we get to the point of sharing it with others. This is far more of a concern in the future. Not immediately necessary, maybe more investigation in the future. 
 
-3. Platform Infrastructure
+## Platform Infrastructure ##
 Research Questions:
 Should you use an existing platform (e.g., YouTube, Vimeo) or create your own from scratch?
 What hosting options are available for storing and streaming videos?
@@ -24,7 +24,7 @@ Study cloud hosting options like AWS, Google Cloud, or Azure for video storage.
 Research Content Delivery Networks (CDNs) for fast and efficient streaming.
 We will be creating our own platform from scratch. The hosting option we are most considering is AWS. We watched this video on AWS.
 
-4. User Experience and Interface Design
+## User Experience and Interface Design ##
 Research Questions:
 What design elements resonate with high school students?
 What’s the best way to organize content (e.g., by year, event, or category)?
@@ -33,7 +33,7 @@ Study UX/UI principles for video-hosting sites.
 Conduct user testing with mock-ups using tools like Figma or Adobe XD.
 For user experience and interface design, we thoroughly enjoy the style of YouTube and Twitch. They both offer good visibility for videos, but they do rely on an algorithm. We don’t plan on doing an algorithm but rather a more file-like structure (like Vimeo). We plan to break videos down by year, then category, then event. This offers an easy-to-understand structure for users to enjoy. 
 
-5. Video Formats and Quality
+## Video Formats and Quality ##
 Research Questions:
 What video formats and resolutions should your site support?
 How will videos be optimized for different devices?
@@ -42,7 +42,7 @@ Research video compression techniques (e.g., H.264, VP9).
 Study mobile-friendly video streaming practices.
 After researching video compression techniques, we found there are two main types: lossy (discarding some data) and lossless (preserves all data) compression. The most common versions of these are H.264, H.265, VP9, AV1, and FFV1. We believe that H.264 (AVC) would be the best for our project because of its high compatibility, balanced compression, and easy encoding through tools like Handbrake and FFmpeg. We can use either of these tools alongside a CRF (constant rate factor) of roughly 23-28 to balance quality and file size effectively on our website. 
 
-6. Community and Content Moderation
+## Community and Content Moderation ##
 Research Questions:
 How will you moderate uploaded content to prevent misuse?
 Should you implement user authentication or restricted access?
@@ -51,7 +51,7 @@ Research moderation tools like AI-driven filtering (e.g., AWS Rekognition or Goo
 Explore user authentication platforms like Firebase Authentication.
 We definitely value the importance of content moderation on our site, especially when it comes to high schoolers that can be immature. This is also an area of the project where we want to integrate AI because it’s one of the most effective use-cases. We intend to audit users through a Google sign-in, ensuring they are part of the  “@vhhscougars.org” community. Additionally, tools like Amazon Rekognition and Hive Moderation can be used for AI content moderation. These are add-ons specifically meant for video moderation, with Hive even being usable for live streams (shows how advanced it is). 
 
-7. Technical Development
+## Technical Development ##
 Research Questions:
 What programming languages or frameworks are suitable for video-hosting sites?
 Should you build a front-end and back-end separately, or use a full-stack framework?
@@ -60,7 +60,7 @@ Research frameworks like React.js, Next.js, Django, or Flask for development.
 Explore open-source video-hosting platforms or APIs to save development time.
 ChatGPT recommends building front-end and back-end separately, using django or flask for the backend. Use HTML, CSS and JS for frontend and python for backend.
 
-8. Scalability and Maintenance
+## Scalability and Maintenance ##
 Research Questions:
 How will the site handle a large number of uploads and visitors simultaneously?
 How will you ensure the site remains functional and secure over time?
@@ -68,5 +68,3 @@ Actions:
 Research scaling solutions like load balancing and caching.
 Study basic cybersecurity measures for websites.
 To handle a large number of uploads and visitors, we will implement load balancing like AWS Elastic Load Balancing to distribute traffic across multiple servers, scalable storage using AWS S3 for video files, and asynchronous processing with something like AWS Lambda to offload intensive tasks. We will use AI-powered content moderation with TensorFlow/HuggingFace, combined with human review. DDoS protection using something like AWS shield and automatic backups using AWS backup.
-
-
