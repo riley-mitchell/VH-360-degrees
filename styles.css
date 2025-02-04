@@ -1,14 +1,17 @@
+/* styles.css */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f0f0f0; /* Light grey background for contrast */
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #FF0000;
+    background: #4169E1; /* Royal Blue */
     padding: 10px 20px;
     color: white;
 }
@@ -16,18 +19,25 @@ header {
 .search-bar {
     width: 50%;
     padding: 8px;
+    border: 1px solid #C0C0C0; /* Silver border */
 }
 
 nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    background: #F1F1F1;
+    background: #C0C0C0; /* Silver */
 }
 
 nav ul li {
     padding: 15px 20px;
     cursor: pointer;
+    color: #4169E1; /* Royal Blue text */
+}
+
+nav ul li:hover {
+    background: #4169E1; /* Royal Blue */
+    color: white;
 }
 
 .video-grid {
@@ -39,8 +49,24 @@ nav ul li {
 
 .video-item {
     width: 300px;
+    background: white;
+    border: 1px solid #C0C0C0; /* Silver border */
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .video-item img {
     width: 100%;
 }
+
+.video-item h3 {
+    color: #4169E1; /* Royal Blue */
+    margin: 10px;
+}
+
+.video-item p {
+    margin: 0 10px 10px;
+    color: #555;
+}
+
