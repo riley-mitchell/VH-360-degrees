@@ -1,11 +1,6 @@
 // script.js
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll("table a").forEach(link => {
-        link.addEventListener("click", function(event) {
-            event.preventDefault();
-            const page = this.getAttribute("href");
-            window.location.href = page;
-        });
-    });
+  // Just a simple log to confirm the page has loaded.
+  console.log("Page loaded – Original Facebook style replicated.");
 });
