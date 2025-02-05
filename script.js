@@ -1,8 +1,11 @@
 // script.js
-document.querySelectorAll('nav ul li a').forEach(link => {
-    link.addEventListener('click', (event) => {
-        event.preventDefault();
-        const page = event.target.getAttribute('href');
-        window.location.href = page;
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("table a").forEach(link => {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            const page = this.getAttribute("href");
+            window.location.href = page;
+        });
     });
 });
