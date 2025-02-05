@@ -7,38 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="logo">VH360°</div>
-        <input type="text" placeholder="Search..." class="search-bar">
-        <div class="user-profile">👤</div>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="sports_games.html">Sports Games</a></li>
-            <li><a href="assemblies.html">Assemblies</a></li>
-            <li><a href="day_in_the_life.html">Day in the Life</a></li>
-            <li><a href="clubs.html">Clubs</a></li>
-        </ul>
-    </nav>
-    
-    <main>
-        <div class="video-grid">
-            <div class="video-item">
-                <img src="thumbnail1.jpg" alt="Video Thumbnail">
-                <h3>Video Title 1</h3>
-                <p>Channel Name</p>
-                <p>1.2M views • 2 days ago</p>
-            </div>
-            <div class="video-item">
-                <img src="thumbnail2.jpg" alt="Video Thumbnail">
-                <h3>Video Title 2</h3>
-                <p>Channel Name</p>
-                <p>500K views • 1 week ago</p>
-            </div>
-        </div>
-    </main>
-    
+    <table>
+        <tr>
+            <th colspan="3">
+                <h1>VH360°</h1>
+                <input type="text" placeholder="Search..." class="search-bar">
+                <span class="user-profile">👤</span>
+            </th>
+        </tr>
+        <tr>
+            <td><a href="sports_games.html">Sports Games</a></td>
+            <td><a href="assemblies.html">Assemblies</a></td>
+            <td><a href="day_in_the_life.html">Day in the Life</a></td>
+            <td><a href="clubs.html">Clubs</a></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p>Welcome to VH360°! Choose a category above to explore videos.</p>
+            </td>
+        </tr>
+    </table>
+
     <script src="script.js"></script>
 </body>
 </html>
