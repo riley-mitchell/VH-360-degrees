@@ -34,6 +34,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;  /* Ensure it takes up full width of its container */
+  max-width: 300px;  /* Optional: to limit the width of the button */
+  margin-top: 20px;  /* Adds some space above the button */
 }
 
 /* Main content */
@@ -68,7 +71,5 @@ body {
 /* Right-side styling */
 .right-side h2 {
   color: #3B5998;
-}
-.right-side .g_id_signin {
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
