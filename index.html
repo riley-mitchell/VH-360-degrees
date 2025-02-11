@@ -13,11 +13,6 @@
       <img src="school_logo.png" alt="School Logo">
     </div>
     <div class="login-box">
-      <form>
-        <input type="text" placeholder="Email" name="email">
-        <input type="password" placeholder="Password" name="password">
-        <input type="submit" value="Log In">
-      </form>
       <div id="g_id_onload"
         data-client_id="YOUR_GOOGLE_CLIENT_ID"
         data-callback="handleCredentialResponse">
@@ -34,13 +29,11 @@
     </div>
     <div class="right-side">
       <h2>Sign Up</h2>
-      <form>
-        <input type="text" placeholder="First Name" name="first_name">
-        <input type="text" placeholder="Last Name" name="last_name">
-        <input type="email" placeholder="Email" name="email">
-        <input type="password" placeholder="New Password" name="password">
-        <input type="submit" value="Sign Up">
-      </form>
+      <div id="g_id_onload"
+        data-client_id="YOUR_GOOGLE_CLIENT_ID"
+        data-callback="handleCredentialResponse">
+      </div>
+      <div class="g_id_signin" data-type="standard"></div>
     </div>
   </div>
 
