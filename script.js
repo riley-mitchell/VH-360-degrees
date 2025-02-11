@@ -1,5 +1,3 @@
-// script.js
-
 document.addEventListener("DOMContentLoaded", function() {
   console.log("Page loaded – Original Facebook style replicated.");
 });
@@ -12,9 +10,15 @@ function handleCredentialResponse(response) {
   const userInfo = parseJwt(response.credential);
   console.log("User Info:", userInfo);
   
-  // Store user info in local storage and redirect
-  localStorage.setItem("user", JSON.stringify(userInfo));
-  window.location.href = "dashboard.html";
+  // Domain restriction check
+  if (userInfo.email.endsWith("@vhhscougars.org")) {
+    console.log("Login successful:", userInfo);
+    // Store user info in local storage and redirect
+    localStorage.setItem("user", JSON.stringify(userInfo));
+    window.location.href = "dashboard.html"; // Redirect to the dashboard
+  } else {
+    alert("Only @vhhscougars.org emails are allowed.");
+  }
 }
 
 // Function to decode JWT
@@ -25,3 +29,4 @@ function parseJwt(token) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join('')));
 }
+
