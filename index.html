@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VH360° - The Original Social Experience</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <!-- Header with blue background, school logo, and a simple login form -->
   <div id="header">
     <div class="logo">
-      <!-- Placeholder for the school logo -->
       <img src="school_logo.png" alt="School Logo">
     </div>
     <div class="login-box">
@@ -19,15 +18,18 @@
         <input type="password" placeholder="Password" name="password">
         <input type="submit" value="Log In">
       </form>
+      <div id="g_id_onload"
+        data-client_id="YOUR_GOOGLE_CLIENT_ID"
+        data-callback="handleCredentialResponse">
+      </div>
+      <div class="g_id_signin" data-type="standard"></div>
     </div>
   </div>
 
-  <!-- Main content with a two-column layout -->
   <div id="content">
     <div class="left-side">
       <h1>VH360°</h1>
       <p>Connect with friends and share your life.</p>
-      <!-- You can include an image that echoes the original Facebook style if desired -->
       <img src="original_fb_style.png" alt="Original Facebook Style Example">
     </div>
     <div class="right-side">
