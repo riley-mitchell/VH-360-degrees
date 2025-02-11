@@ -2,15 +2,15 @@
 
 /* Overall page styling */
 body {
-  background-color: #E9EAED; /* Light gray background */
+  background-color: #E9EAED;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* Header styling replicating the original blue header */
+/* Header styling */
 #header {
-  background-color: #3B5998; /* Classic Facebook blue */
+  background-color: #3B5998;
   color: white;
   padding: 10px 20px;
   display: flex;
@@ -18,39 +18,32 @@ body {
   align-items: center;
 }
 
-/* Logo image in the header */
+/* Logo */
 .logo img {
   height: 40px;
 }
 
-/* Login box styling */
-.login-box form {
+/* Login box */
+.login-box {
   display: flex;
-  gap: 5px;
-}
-.login-box input[type="text"],
-.login-box input[type="password"] {
-  padding: 5px;
-  border: none;
-  border-radius: 2px;
-}
-.login-box input[type="submit"] {
-  background-color: #4C66A4;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 2px;
+  align-items: center;
 }
 
-/* Main content area */
+/* Google Sign-In Button */
+.g_id_signin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main content */
 #content {
   display: flex;
   width: 900px;
   margin: 20px auto;
   background-color: white;
   padding: 20px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Two-column layout */
@@ -72,27 +65,10 @@ body {
   line-height: 1.4;
 }
 
-/* Right-side (Sign Up form) styling */
+/* Right-side styling */
 .right-side h2 {
   color: #3B5998;
 }
-.right-side form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.right-side input[type="text"],
-.right-side input[type="email"],
-.right-side input[type="password"] {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-}
-.right-side input[type="submit"] {
-  background-color: #3B5998;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 2px;
+.right-side .g_id_signin {
+  margin-top: 10px;
 }
