@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Welcome to VH360°</h1>
+  <div id="user-info"></div>
+  <button onclick="logout()">Log Out</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        document.getElementById("user-info").innerHTML = `
+          <h2>Hello, ${user.name}</h2>
+          <img src="${user.picture}" alt="Profile Picture">
+          <p>Email: ${user.email}</p>
+        `;
+      } else {
+        window.location.href = "index.html"; // Redirect if no user data
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
 
