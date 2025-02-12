@@ -1,75 +1,115 @@
-/* styles.css */
-
-/* Overall page styling */
-body {
-  background-color: #E9EAED;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+:root {
+  --primary-color: #1877f2;
+  --secondary-color: #42b72a;
+  --text-color: #1c1e21;
+  --background-color: #f0f2f5;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
 #header {
-  background-color: #3B5998;
-  color: white;
-  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 12px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Logo */
 .logo img {
   height: 40px;
+  vertical-align: middle;
 }
 
-/* Login box */
-.login-box {
-  display: flex;
-  align-items: center;
-}
-
-/* Google Sign-In Button */
-.g_id_signin {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;  /* Ensure it takes up full width of its container */
-  max-width: 300px;  /* Optional: to limit the width of the button */
-  margin-top: 20px;  /* Adds some space above the button */
-}
-
-/* Main content */
 #content {
+  max-width: 1000px;
+  margin: 82px auto 20px;
+  padding: 20px;
   display: flex;
-  width: 900px;
-  margin: 20px auto;
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-/* Two-column layout */
-.left-side, .right-side {
-  flex: 1;
-  padding: 20px;
-}
 .left-side {
-  border-right: 1px solid #ddd;
+  flex: 1;
+  max-width: 580px;
+  padding: 20px 0;
 }
 
-/* Left-side styling */
 .left-side h1 {
-  color: #3B5998;
-  margin-bottom: 10px;
-}
-.left-side p {
-  font-size: 16px;
-  line-height: 1.4;
+  color: var(--primary-color);
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-/* Right-side styling */
-.right-side h2 {
-  color: #3B5998;
-  margin-bottom: 10px;
+.left-side p {
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.right-side {
+  flex: 0 1 396px;
+}
+
+.sign-up-box {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  text-align: center;
+}
+
+.sign-up-box h2 {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.g_id_signin {
+  display: flex !important;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+@media (max-width: 900px) {
+  #content {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .left-side {
+    padding: 0;
+  }
+
+  .left-side h1 {
+    font-size: 2.5rem;
+  }
+
+  .left-side p {
+    font-size: 1.2rem;
+  }
+
+  .right-side {
+    width: 100%;
+    max-width: 396px;
+  }
 }
