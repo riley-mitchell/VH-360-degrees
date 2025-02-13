@@ -4,39 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VH360° - The Original Social Experience</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body>
-  <div id="header">
-    <div class="logo">
-      <img src="cougar.png" alt="School Logo">
-    </div>
-    <div class="login-box">
-      <div id="g_id_onload"
-        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-        data-callback="handleCredentialResponse">
+<body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="cougar.png" alt="Cougar Logo" class="w-12 h-12 rounded-full">
+        <h1 class="text-3xl font-bold gradient-text">VH360°</h1>
       </div>
-      <div class="g_id_signin" data-type="standard"></div>
+      <div id="g_id_signin" data-type="standard" class="flex items-center"></div>
     </div>
-  </div>
+  </nav>
 
-  <div id="content">
-    <div class="left-side">
-      <h1>VH360°</h1>
-      <p>Connect with friends and share your life at Vernon Hills High School.</p>
-    </div>
-    <div class="right-side">
-      <div class="sign-up-box">
-        <h2>Sign Up</h2>
-        <div id="g_id_onload"
-          data-client_id="YOUR_GOOGLE_CLIENT_ID"
-          data-callback="handleCredentialResponse">
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left Column -->
+      <div class="space-y-6">
+        <h2 class="text-4xl font-bold text-gray-800">
+          Connect with Your Vernon Hills Community
+        </h2>
+        <p class="text-xl text-gray-600">
+          Share experiences, stay updated, and build lasting connections with your fellow Cougars.
+        </p>
+        <div class="alert-box">
+          <svg class="alert-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <p>Exclusively for @vhhscougars.org email addresses</p>
         </div>
-        <div class="g_id_signin" data-type="standard"></div>
+      </div>
+
+      <!-- Right Column - Sign Up Box -->
+      <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="space-y-6">
+          <h3 class="text-2xl font-semibold text-gray-800">
+            Join Your School Community
+          </h3>
+          <p class="text-gray-600">
+            Sign in with your school email to get started
+          </p>
+          <div id="g_id_onload"
+            data-client_id="YOUR_GOOGLE_CLIENT_ID"
+            data-callback="handleCredentialResponse">
+          </div>
+          <div class="g_id_signin" data-type="standard"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto py-6 text-center text-gray-600">
+    <p>© 2025 VH360° - The Original Social Experience</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
