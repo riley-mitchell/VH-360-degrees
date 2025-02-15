@@ -5,7 +5,6 @@
   --background-color: #f0f2f5;
   --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
 }
-
 /* Custom gradient text effect */
 .gradient-text {
   background: linear-gradient(to right, #1877f2, #0c4a9e);
@@ -13,7 +12,6 @@
   background-clip: text;
   color: transparent;
 }
-
 /* Custom alert box styling */
 .alert-box {
   display: flex;
@@ -24,7 +22,6 @@
   background-color: #eff6ff;
   border: 1px solid #bfdbfe;
 }
-
 .alert-icon {
   width: 1rem;
   height: 1rem;
@@ -32,7 +29,6 @@
   stroke-width: 2;
   fill: none;
 }
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .grid {
@@ -48,13 +44,28 @@
     padding-right: 1rem;
   }
 }
-
 /* Animation for hover effects */
 .shadow-xl {
   transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .shadow-xl:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+/* Video aspect ratio container */
+.aspect-w-9 {
+  position: relative;
+  padding-bottom: 177.78%; /* 16:9 aspect ratio for vertical video */
+}
+.aspect-h-16 {
+  position: relative;
+}
+.aspect-w-9 > *, .aspect-h-16 > * {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
