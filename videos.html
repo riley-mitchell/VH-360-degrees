@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos - VH360°</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <img src="cougar.png" alt="Cougar Logo" class="w-12 h-12 rounded-full">
+        <h1 class="text-3xl font-bold gradient-text">VH360°</h1>
+      </div>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="index.html" class="text-gray-600 hover:text-primary-color transition-colors">Home</a>
+        <a href="videos.html" class="text-gray-600 hover:text-primary-color transition-colors font-medium">Videos</a>
+      </div>
+      <div id="g_id_signin" data-type="standard" class="flex items-center"></div>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="space-y-8">
+      <div class="text-center space-y-4">
+        <h2 class="text-4xl font-bold text-gray-800">
+          Cougar Community Videos
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Watch the latest highlights and moments from Vernon Hills High School.
+        </p>
+      </div>
+      
+      <!-- Video Section -->
+      <div class="mt-12">
+        <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
+          <div class="p-6 space-y-4">
+            <h3 class="text-2xl font-semibold text-gray-800">Featured Video</h3>
+            
+            <!-- YouTube Shorts Embed - Replace VIDEO_ID with your actual YouTube Shorts ID -->
+            <div class="aspect-w-9 aspect-h-16 rounded-lg overflow-hidden">
+              <iframe
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full"
+              ></iframe>
+            </div>
+            
+            <p class="text-gray-600">
+              Check out what's happening in our school community!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="mt-auto py-6 text-center text-gray-600">
+    <p>© 2025 VH360° - The Original Social Experience</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
