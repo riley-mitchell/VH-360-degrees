@@ -12,14 +12,14 @@
   <!-- Navigation Bar -->
   <nav class="bg-white shadow-md px-6 py-4">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <img src="cougar.png" alt="Cougar Logo" class="w-12 h-12 rounded-full">
+      <div class="flex items-center">
         <h1 class="text-3xl font-bold gradient-text">VH360°</h1>
       </div>
       <div class="flex items-center space-x-6">
         <div class="hidden md:flex items-center space-x-6 mr-4">
           <a href="index.html" class="text-gray-600 hover:text-primary-color transition-colors">Home</a>
           <a href="videos.html" class="text-gray-600 hover:text-primary-color transition-colors font-medium">Videos</a>
+          <a href="dashboard.html" class="text-gray-600 hover:text-primary-color transition-colors">Dashboard</a>
         </div>
         <div id="g_id_signin" data-type="standard"></div>
       </div>
@@ -39,8 +39,8 @@
       </div>
       
       <!-- Video Section -->
-      <div class="mt-12">
-        <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
+      <div class="mt-12 grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
           <div class="p-6 space-y-4">
             <h3 class="text-2xl font-semibold text-gray-800">Featured Video</h3>
             
@@ -57,6 +57,27 @@
             
             <p class="text-gray-600">
               Check out what's happening in our school community!
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
+          <div class="p-6 space-y-4">
+            <h3 class="text-2xl font-semibold text-gray-800">Latest Updates</h3>
+            
+            <!-- Second YouTube Shorts Embed -->
+            <div class="video-container">
+              <iframe
+                src="https://www.youtube.com/embed/hCChDF87Irk"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+            
+            <p class="text-gray-600">
+              Stay up to date with the latest events at VHHS!
             </p>
           </div>
         </div>
