@@ -2,21 +2,35 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("VH360° - Modern interface initialized");
 });
+
 // Google Sign-In callback function
 function handleCredentialResponse(response) {
   console.log("Encoded JWT ID Token: " + response.credential);
   
-  const userInfo = parseJwt(response.credential);
-  console.log("User Info:", userInfo);
-  
-  if (userInfo.email.endsWith("@vhhscougars.org")) {
-    console.log("Login successful:", userInfo);
-    localStorage.setItem("user", JSON.stringify(userInfo));
-    window.location.href = "dashboard.html";
-  } else {
-    showError("Only @vhhscougars.org emails are allowed.");
+  try {
+    const userInfo = parseJwt(response.credential);
+    console.log("User Info:", userInfo);
+    
+    if (userInfo.email && userInfo.email.endsWith("@vhhscougars.org")) {
+      console.log("Login successful:", userInfo);
+      // Save user info to localStorage
+      localStorage.setItem("user", JSON.stringify({
+        name: userInfo.name,
+        email: userInfo.email,
+        picture: userInfo.picture
+      }));
+      
+      // Redirect to dashboard
+      window.location.href = "dashboard.html";
+    } else {
+      showError("Only @vhhscougars.org emails are allowed.");
+    }
+  } catch (error) {
+    console.error("Error processing sign-in:", error);
+    showError("An error occurred during sign-in. Please try again.");
   }
 }
+
 // JWT parsing function
 function parseJwt(token) {
   let base64Url = token.split('.')[1];
@@ -25,6 +39,7 @@ function parseJwt(token) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join('')));
 }
+
 // Error handling function
 function showError(message) {
   const errorAlert = document.createElement('div');
@@ -45,6 +60,7 @@ function showError(message) {
     errorAlert.remove();
   }, 5000);
 }
+
 // Logout function
 function logout() {
   localStorage.removeItem("user");
