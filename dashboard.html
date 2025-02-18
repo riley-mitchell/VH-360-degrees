@@ -52,20 +52,28 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      let user = JSON.parse(localStorage.getItem("user"));
-      if (user) {
-        document.getElementById("user-info").innerHTML = `
-          <div class="flex flex-col items-center">
-            <img src="${user.picture}" alt="Profile Picture" class="w-24 h-24 rounded-full shadow-md">
-          </div>
-          <div class="space-y-2 flex-1">
-            <h3 class="text-2xl font-semibold text-gray-800">Hello, ${user.name}!</h3>
-            <p class="text-gray-600">Email: ${user.email}</p>
-            <p class="text-gray-600">Thanks for being part of our community.</p>
-          </div>
-        `;
-      } else {
-        window.location.href = "index.html"; // Redirect if no user data
+      try {
+        let user = JSON.parse(localStorage.getItem("user"));
+        console.log("Retrieved user data:", user);
+        
+        if (user && user.email) {
+          document.getElementById("user-info").innerHTML = `
+            <div class="flex flex-col items-center">
+              <img src="${user.picture || '/api/placeholder/100/100'}" alt="Profile Picture" class="w-24 h-24 rounded-full shadow-md">
+            </div>
+            <div class="space-y-2 flex-1">
+              <h3 class="text-2xl font-semibold text-gray-800">Hello, ${user.name || 'User'}!</h3>
+              <p class="text-gray-600">Email: ${user.email}</p>
+              <p class="text-gray-600">Thanks for being part of our community.</p>
+            </div>
+          `;
+        } else {
+          console.log("No valid user data found, redirecting to login");
+          window.location.href = "index.html"; // Redirect if no user data
+        }
+      } catch (error) {
+        console.error("Error checking user authentication:", error);
+        window.location.href = "index.html"; // Redirect on any error
       }
     });
     
