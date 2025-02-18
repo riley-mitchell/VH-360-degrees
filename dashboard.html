@@ -3,28 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Dashboard - VH360°</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <h1>Welcome to VH360°</h1>
-  <div id="user-info"></div>
-  <button onclick="logout()">Log Out</button>
+<body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <h1 class="text-3xl font-bold gradient-text">VH360°</h1>
+      </div>
+      <div class="flex items-center space-x-6">
+        <div class="hidden md:flex items-center space-x-6 mr-4">
+          <a href="index.html" class="text-gray-600 hover:text-primary-color transition-colors">Home</a>
+          <a href="videos.html" class="text-gray-600 hover:text-primary-color transition-colors">Videos</a>
+          <a href="dashboard.html" class="text-gray-600 hover:text-primary-color transition-colors font-medium">Dashboard</a>
+        </div>
+        <button onclick="logout()" class="px-4 py-2 bg-primary-color text-white rounded hover:bg-blue-600 transition-colors">Log Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
+      <div class="space-y-6">
+        <h2 class="text-3xl font-bold text-gray-800">Welcome to Your Dashboard</h2>
+        <div id="user-info" class="flex flex-col md:flex-row items-center md:items-start gap-6">
+          <!-- User information will be filled by JavaScript -->
+        </div>
+        <div class="alert-box mt-8">
+          <svg class="alert-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <p>Welcome to VH360° - Your school community hub!</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto py-6 text-center text-gray-600">
+    <p>© 2025 VH360° - The Original Social Experience</p>
+  </footer>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       let user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         document.getElementById("user-info").innerHTML = `
-          <h2>Hello, ${user.name}</h2>
-          <img src="${user.picture}" alt="Profile Picture">
-          <p>Email: ${user.email}</p>
+          <div class="flex flex-col items-center">
+            <img src="${user.picture}" alt="Profile Picture" class="w-24 h-24 rounded-full shadow-md">
+          </div>
+          <div class="space-y-2 flex-1">
+            <h3 class="text-2xl font-semibold text-gray-800">Hello, ${user.name}!</h3>
+            <p class="text-gray-600">Email: ${user.email}</p>
+            <p class="text-gray-600">Thanks for being part of our community.</p>
+          </div>
         `;
       } else {
         window.location.href = "index.html"; // Redirect if no user data
       }
     });
-
+    
     function logout() {
       localStorage.removeItem("user");
       window.location.href = "index.html";
@@ -32,4 +76,3 @@
   </script>
 </body>
 </html>
-
