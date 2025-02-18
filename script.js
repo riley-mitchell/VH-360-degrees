@@ -2,7 +2,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("VH360° - Modern interface initialized");
 });
-
 // Google Sign-In callback function
 function handleCredentialResponse(response) {
   console.log("Encoded JWT ID Token: " + response.credential);
@@ -18,7 +17,6 @@ function handleCredentialResponse(response) {
     showError("Only @vhhscougars.org emails are allowed.");
   }
 }
-
 // JWT parsing function
 function parseJwt(token) {
   let base64Url = token.split('.')[1];
@@ -27,7 +25,6 @@ function parseJwt(token) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join('')));
 }
-
 // Error handling function
 function showError(message) {
   const errorAlert = document.createElement('div');
@@ -48,7 +45,6 @@ function showError(message) {
     errorAlert.remove();
   }, 5000);
 }
-
 // Logout function
 function logout() {
   localStorage.removeItem("user");
