@@ -1,7 +1,41 @@
-// Wait for DOM to load
+// Wait for DOM to load and check auth status
 document.addEventListener("DOMContentLoaded", function() {
   console.log("VH360° - Modern interface initialized");
+  checkAuthAndRedirect();
 });
+
+// Check if user is authenticated and redirect if needed
+function checkAuthAndRedirect() {
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    if (user && user.email) {
+      // If user is logged in and on index, redirect to dashboard
+      if (currentPage === "index.html" || currentPage === "") {
+        window.location.href = "dashboard.html";
+      }
+    } else {
+      // If user is not logged in and trying to access dashboard, redirect to index
+      if (currentPage === "dashboard.html") {
+        window.location.href = "index.html";
+      }
+    }
+  } catch (error) {
+    console.error("Error checking auth:", error);
+  }
+}
+
+// Function to handle dashboard access
+function checkDashboardAccess(event) {
+  event.preventDefault();
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.email) {
+    window.location.href = "dashboard.html";
+  } else {
+    showError("Please sign in to access the dashboard");
+  }
+}
 
 // Google Sign-In callback function
 function handleCredentialResponse(response) {
@@ -53,7 +87,10 @@ function showError(message) {
     <p>${message}</p>
   `;
   
-  document.querySelector('.sign-up-box').prepend(errorAlert);
+  const signUpBox = document.querySelector('.sign-up-box');
+  if (signUpBox) {
+    signUpBox.prepend(errorAlert);
+  }
   
   // Remove error after 5 seconds
   setTimeout(() => {
