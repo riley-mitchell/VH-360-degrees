@@ -7,6 +7,53 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .video-list-item {
+      cursor: pointer;
+      padding: 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+      transition: background-color 0.2s;
+    }
+    .video-list-item:hover {
+      background-color: #f3f4f6;
+    }
+    .video-list-item:last-child {
+      border-bottom: none;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .dropdown-container {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: #f9fafb;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      display: none;
+    }
+    .dropdown-content.open {
+      display: block;
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
   <!-- Navigation Bar -->
@@ -39,44 +86,40 @@
       </div>
       
       <!-- Video Section -->
-      <div class="mt-12 grid md:grid-cols-2 gap-8">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
-          <div class="p-6 space-y-4">
-            <h3 class="text-2xl font-semibold text-gray-800">Featured Video</h3>
-            
-            <!-- YouTube Shorts Embed - Using proper format for Shorts -->
-            <div class="video-container">
-              <iframe
-                src="https://www.youtube.com/embed/hCChDF87Irk"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+      <div class="mt-12 space-y-8">
+        <!-- Daily Development Videos Dropdown -->
+        <div class="dropdown-container">
+          <div class="dropdown-header" id="daily-videos-dropdown">
+            <h3 class="text-2xl font-semibold text-gray-800">Daily Development Videos</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 dropdown-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+          <div class="dropdown-content" id="daily-videos-content">
+            <div class="video-list-item" data-video-id="hCChDF87Irk">
+              Superintendent's weekly message: A glimpse into what's happening at VHHS
             </div>
-            
-            <p class="text-gray-600">
-              Check out what's happening in our school community!
-            </p>
+            <div class="video-list-item" data-video-id="aTR0luxXONg">
+              VHHS Basketball highlights - Winter Finals 2025
+            </div>
+            <div class="video-list-item" data-video-id="eV1m5W7Oe0I">
+              VHHS Spirit Week 2025 - Students showcase Cougar Pride!
+            </div>
           </div>
         </div>
-
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transition-transform hover:translate-y-[-4px]">
+        
+        <!-- Video Display Area -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div class="p-6 space-y-4">
-            <h3 class="text-2xl font-semibold text-gray-800">Latest Updates</h3>
+            <h3 class="text-2xl font-semibold text-gray-800" id="current-video-title">Selected Video</h3>
             
-            <!-- Second YouTube Shorts Embed -->
-            <div class="video-container">
-              <iframe
-                src="https://youtube.com/embed/aTR0luxXONg"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+            <div class="video-container" id="video-display">
+              <p class="text-gray-600 text-center py-12">
+                Select a video from the list above to watch
+              </p>
             </div>
             
-            <p class="text-gray-600">
+            <p class="text-gray-600" id="video-description">
               Stay up to date with the latest events at VHHS!
             </p>
           </div>
@@ -89,6 +132,68 @@
   <footer class="mt-auto py-6 text-center text-gray-600">
     <p>© 2025 VH360° - The Original Social Experience</p>
   </footer>
-  <script src="script.js"></script>
+  
+  <script>
+    // Toggle dropdown
+    document.getElementById('daily-videos-dropdown').addEventListener('click', function() {
+      const content = document.getElementById('daily-videos-content');
+      content.classList.toggle('open');
+      
+      // Change icon direction
+      const icon = this.querySelector('.dropdown-icon');
+      if (content.classList.contains('open')) {
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />';
+      } else {
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />';
+      }
+    });
+    
+    // Video player functionality
+    const videoItems = document.querySelectorAll('.video-list-item');
+    const videoDisplay = document.getElementById('video-display');
+    const videoTitle = document.getElementById('current-video-title');
+    
+    // Video titles and descriptions mapping
+    const videoInfo = {
+      'hCChDF87Irk': {
+        title: "Superintendent's weekly message",
+        description: "A glimpse into what's happening at VHHS this week."
+      },
+      'aTR0luxXONg': {
+        title: "VHHS Basketball highlights",
+        description: "Check out the amazing plays from our Winter Finals 2025!"
+      },
+      'eV1m5W7Oe0I': {
+        title: "VHHS Spirit Week 2025",
+        description: "Students showcase their Cougar Pride during this year's spirit week festivities!"
+      }
+    };
+    
+    videoItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const videoId = this.getAttribute('data-video-id');
+        const info = videoInfo[videoId];
+        
+        // Update the display area with embedded video
+        videoDisplay.innerHTML = `
+          <iframe
+            src="https://www.youtube.com/embed/${videoId}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        `;
+        
+        // Update title and description
+        videoTitle.textContent = info.title;
+        document.getElementById('video-description').textContent = info.description;
+        
+        // Highlight the selected video
+        videoItems.forEach(v => v.classList.remove('bg-blue-50'));
+        this.classList.add('bg-blue-50');
+      });
+    });
+  </script>
 </body>
 </html>
