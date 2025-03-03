@@ -243,12 +243,12 @@
         title: "VHHS Hall Tour",
         description: "February 28, 2025 Walk the Halls Video"
       },
-      'dQw4w9WgXcQ': {
+      'Og44Z31sR8c': {
         title: "BPA State Competition 2025",
         description: "Highlights from the Business Professionals of America State Competition 2025"
       },
       // Images
-      'images/vhdog1.jpg': {
+      'MAGNOLIA.jpeg': {
         title: "Cougar's Best Friend",
         description: "Our school mascot with a furry friend - VHHS spirit!"
       }
@@ -263,36 +263,48 @@
           const videoId = this.getAttribute('data-video-id');
           const info = mediaInfo[videoId];
           
-          // Create YouTube embed
-          mediaContent = `
-            <iframe
-              src="https://www.youtube.com/embed/${videoId}"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          `;
-          
-          // Update title and description
-          mediaTitle.textContent = info.title;
-          mediaDescription.textContent = info.description;
+          if (info) {
+            // Create YouTube embed
+            mediaContent = `
+              <iframe
+                src="https://www.youtube.com/embed/${videoId}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            `;
+            
+            // Update title and description
+            mediaTitle.textContent = info.title;
+            mediaDescription.textContent = info.description;
+          } else {
+            mediaContent = `<p class="text-gray-600 text-center py-12">Video information not found</p>`;
+            mediaTitle.textContent = "Error";
+            mediaDescription.textContent = "Could not load video information";
+          }
         } 
         else if (mediaType === 'image') {
           const imageSrc = this.getAttribute('data-image-src');
           const info = mediaInfo[imageSrc];
           
-          // Create image element
-          mediaContent = `
-            <img
-              src="${imageSrc}"
-              alt="${info.title}"
-            />
-          `;
-          
-          // Update title and description
-          mediaTitle.textContent = info.title;
-          mediaDescription.textContent = info.description;
+          if (info) {
+            // Create image element
+            mediaContent = `
+              <img
+                src="${imageSrc}"
+                alt="${info.title}"
+              />
+            `;
+            
+            // Update title and description
+            mediaTitle.textContent = info.title;
+            mediaDescription.textContent = info.description;
+          } else {
+            mediaContent = `<p class="text-gray-600 text-center py-12">Image information not found</p>`;
+            mediaTitle.textContent = "Error";
+            mediaDescription.textContent = "Could not load image information";
+          }
         }
         
         // Update the display area
