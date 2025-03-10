@@ -20,28 +20,6 @@
     .video-list-item:last-child {
       border-bottom: none;
     }
-    .media-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      max-width: 100%;
-    }
-    .media-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .media-container img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
     .dropdown-container {
       border: 1px solid #e5e7eb;
       border-radius: 0.5rem;
@@ -61,6 +39,50 @@
     }
     .dropdown-content.open {
       display: block;
+    }
+    .media-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .media-modal.open {
+      display: flex;
+    }
+    .media-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+    }
+    .media-content iframe {
+      width: 100%;
+      height: 80vh;
+      max-height: 80vh;
+    }
+    .media-content img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+    }
+    .media-info {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+    .close-button {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: white;
+      cursor: pointer;
+      font-size: 30px;
     }
   </style>
 </head>
@@ -168,26 +190,21 @@
             </div>
           </div>
         </div>
-        
-        <!-- Media Display Area -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div class="p-6 space-y-4">
-            <h3 class="text-2xl font-semibold text-gray-800" id="current-media-title">Selected Media</h3>
-            
-            <div class="media-container" id="media-display">
-              <p class="text-gray-600 text-center py-12">
-                Select a video or image from the list above to view
-              </p>
-            </div>
-            
-            <p class="text-gray-600" id="media-description">
-              Stay up to date with the latest events at VHHS!
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   </main>
+  
+  <!-- Media Modal -->
+  <div id="media-modal" class="media-modal">
+    <div class="media-content">
+      <div class="close-button" id="close-modal">&times;</div>
+      <div id="modal-media-container"></div>
+      <div class="media-info">
+        <h3 class="text-xl font-semibold text-gray-800" id="modal-title"></h3>
+        <p class="text-gray-600" id="modal-description"></p>
+      </div>
+    </div>
+  </div>
   
   <!-- Footer -->
   <footer class="mt-auto py-6 text-center text-gray-600">
@@ -225,11 +242,13 @@
       }
     }
     
-    // Media player functionality
+    // Media modal functionality
     const mediaItems = document.querySelectorAll('.video-list-item');
-    const mediaDisplay = document.getElementById('media-display');
-    const mediaTitle = document.getElementById('current-media-title');
-    const mediaDescription = document.getElementById('media-description');
+    const mediaModal = document.getElementById('media-modal');
+    const modalMediaContainer = document.getElementById('modal-media-container');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const closeButton = document.getElementById('close-modal');
     
     // Media titles and descriptions mapping
     const mediaInfo = {
@@ -246,6 +265,10 @@
         title: "February 26, 2025",
         description: "February 26, 2025 Daily Development Video"
       },
+      'bVXbUD2jPoM': {
+        title: "March 5, 2025",
+        description: "March 5, 2025 Daily Development Video"
+      },
       '2ADlHENcjWs': {
         title: "VHHS Hall Tour",
         description: "February 28, 2025 Walk the Halls Video"
@@ -257,10 +280,15 @@
       // Images
       'MAGNOLIA.jpeg': {
         title: "Cougar's Best Friend",
-        description: "Magnolia Mitchell"
+        description: "Magnolia (Maggie) Mitchell"
+      },
+      'FINNEGAN.jpeg': {
+        title: "Cougar's Loyal Companion",
+        description: "Finnegan (Finn) Avula"
       }
     };
     
+    // Open modal when clicking on a media item
     mediaItems.forEach(item => {
       item.addEventListener('click', function() {
         const mediaType = this.getAttribute('data-media-type');
@@ -274,7 +302,7 @@
             // Create YouTube embed
             mediaContent = `
               <iframe
-                src="https://www.youtube.com/embed/${videoId}"
+                src="https://www.youtube.com/embed/${videoId}?autoplay=1"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -283,12 +311,12 @@
             `;
             
             // Update title and description
-            mediaTitle.textContent = info.title;
-            mediaDescription.textContent = info.description;
+            modalTitle.textContent = info.title;
+            modalDescription.textContent = info.description;
           } else {
             mediaContent = `<p class="text-gray-600 text-center py-12">Video information not found</p>`;
-            mediaTitle.textContent = "Error";
-            mediaDescription.textContent = "Could not load video information";
+            modalTitle.textContent = "Error";
+            modalDescription.textContent = "Could not load video information";
           }
         } 
         else if (mediaType === 'image') {
@@ -305,22 +333,53 @@
             `;
             
             // Update title and description
-            mediaTitle.textContent = info.title;
-            mediaDescription.textContent = info.description;
+            modalTitle.textContent = info.title;
+            modalDescription.textContent = info.description;
           } else {
             mediaContent = `<p class="text-gray-600 text-center py-12">Image information not found</p>`;
-            mediaTitle.textContent = "Error";
-            mediaDescription.textContent = "Could not load image information";
+            modalTitle.textContent = "Error";
+            modalDescription.textContent = "Could not load image information";
           }
         }
         
-        // Update the display area
-        mediaDisplay.innerHTML = mediaContent;
+        // Update the modal content and open it
+        modalMediaContainer.innerHTML = mediaContent;
+        mediaModal.classList.add('open');
         
-        // Highlight the selected item
-        mediaItems.forEach(v => v.classList.remove('bg-blue-50'));
-        this.classList.add('bg-blue-50');
+        // Add body overflow hidden to prevent scrolling
+        document.body.style.overflow = 'hidden';
       });
+    });
+    
+    // Close modal
+    closeButton.addEventListener('click', function() {
+      mediaModal.classList.remove('open');
+      modalMediaContainer.innerHTML = '';
+      
+      // Restore body scrolling
+      document.body.style.overflow = 'auto';
+    });
+    
+    // Close modal when clicking outside of content
+    mediaModal.addEventListener('click', function(event) {
+      if (event.target === mediaModal) {
+        mediaModal.classList.remove('open');
+        modalMediaContainer.innerHTML = '';
+        
+        // Restore body scrolling
+        document.body.style.overflow = 'auto';
+      }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && mediaModal.classList.contains('open')) {
+        mediaModal.classList.remove('open');
+        modalMediaContainer.innerHTML = '';
+        
+        // Restore body scrolling
+        document.body.style.overflow = 'auto';
+      }
     });
   </script>
 </body>
