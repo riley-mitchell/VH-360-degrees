@@ -2,19 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
   
-  // Load EmailJS SDK
-  // Add this to your HTML if you haven't already:
-  // <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  
-  // Initialize EmailJS
-  // Replace with your actual EmailJS user ID
-  const EMAILJS_USER_ID = "yqk2c-EK0Ru-E9VlTD"; 
+  // EmailJS configuration
+  const EMAILJS_PUBLIC_KEY = "yqk2c-EK0Ru-E9VlTD";
   const EMAILJS_SERVICE_ID = "service_y2xgdne";
   const EMAILJS_TEMPLATE_ID = "template_17sff1j";
   
   // Initialize EmailJS
   if (typeof emailjs !== 'undefined') {
-    emailjs.init(EMAILJS_USER_ID);
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  } else {
+    console.error("EmailJS library not loaded!");
   }
   
   if (contactForm) {
@@ -42,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         from_email: email,
         subject: subject,
         message: message,
-        to_email: 'rileyjaewook@gmail.com' // This will be hidden in the EmailJS template
+        to_email: 'rileyjaewook@gmail.com'
       };
       
       // Send email using EmailJS
@@ -62,12 +59,16 @@ document.addEventListener('DOMContentLoaded', function() {
           })
           .catch(function(error) {
             console.log('FAILED...', error);
+            // Log more detailed error information
+            if (error.text) {
+              console.error('Error details:', error.text);
+            }
             showStatus('Failed to send message. Please try again later.', 'error');
           });
       } else {
         // Fallback if EmailJS is not loaded
-        console.log('EmailJS not loaded. Form data:', templateParams);
-        showStatus('Unable to send message. Please try again later.', 'error');
+        console.error('EmailJS not loaded. Form data:', templateParams);
+        showStatus('Unable to send message. EmailJS library not loaded.', 'error');
       }
     });
   }
