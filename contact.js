@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize EmailJS
   // Replace with your actual EmailJS user ID
-  const EMAILJS_USER_ID = "YOUR_EMAILJS_USER_ID"; 
+  const EMAILJS_USER_ID = "yqk2c-EK0Ru-E9VlTD"; 
   const EMAILJS_SERVICE_ID = "service_y2xgdne";
   const EMAILJS_TEMPLATE_ID = "template_17sff1j";
   
