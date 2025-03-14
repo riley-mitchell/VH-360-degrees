@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const formStatus = document.getElementById('formStatus');
   
   // EmailJS configuration
-  const EMAILJS_PUBLIC_KEY = "yqk2c-EK0Ru-E9VlTD";
+  const EMAILJS_PUBLIC_KEY = "34Q6gKc-Iaxb92WIC";
   const EMAILJS_SERVICE_ID = "service_y2xgdne";
   const EMAILJS_TEMPLATE_ID = "template_17sff1j";
   
