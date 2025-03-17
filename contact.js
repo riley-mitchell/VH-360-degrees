@@ -35,11 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Prepare EmailJS parameters
       const templateParams = {
-        from_name: name,
-        from_email: email,
-        subject: subject,
-        message: message,
-        to_email: 'rileyjaewook@gmail.com'
+          from_name: "VH360", // Your name or brand name
+          from_email: "rileyjaewook@gmail.com", // Your email as the sender
+          reply_to: "rileyjaewook@gmail.com", // Ensures replies go to you
+          to_email: email, // The email of the person filling out the form
+          subject: "Thank you for reaching out!", // Auto-reply subject
+          message: "We received your message and will get back to you soon." // Auto-reply message
       };
       
       // Send email using EmailJS
