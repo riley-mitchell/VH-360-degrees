@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
       // Prepare EmailJS parameters
       const templateParams = {
           to_email: email, // The email of the person filling out the form
-          name: name, // The name of the person filling out the form
-          title: subject, // The subject from the person filling out the form
+          to_name: name, // The name of the person filling out the form
+          to_title: subject, // The subject from the person filling out the form
       };
       
       // Send email using EmailJS
