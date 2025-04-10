@@ -84,6 +84,12 @@
       cursor: pointer;
       font-size: 30px;
     }
+    .featured-video {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -117,8 +123,31 @@
         </p>
       </div>
       
-      <!-- Video Section -->
-      <div class="mt-12 space-y-8">
+      <!-- 360° Videos Section -->
+      <div class="mt-12 space-y-4">
+        <h3 class="text-2xl font-semibold text-gray-800">360° Videos</h3>
+        <p class="text-gray-600">Experience Vernon Hills High School in immersive 360° video.</p>
+        
+        <div class="bg-white rounded-lg shadow-md p-4 mb-8">
+          <div class="featured-video">
+            <iframe
+              src="https://www.youtube.com/embed/placeholder360video"
+              title="360° Video Tour"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              class="w-full h-full"
+            ></iframe>
+          </div>
+          <div class="pt-4">
+            <h4 class="text-xl font-semibold">VHHS 360° Experience</h4>
+            <p class="text-gray-600">Take a virtual tour of our campus in immersive 360°. Use your mouse to look around!</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Video Section with Dropdowns -->
+      <div class="space-y-8">
         <!-- Daily Development Videos Dropdown -->
         <div class="dropdown-container">
           <div class="dropdown-header" id="daily-videos-dropdown">
@@ -313,6 +342,11 @@
       'FINNEGAN.jpeg': {
         title: "Cougar's Loyal Companion",
         description: "Finnegan (Finn) Avula"
+      },
+      // 360 Video placeholder
+      'a6jHgI5HOZI': {
+        title: "Xperience Battlebots Competition",
+        description: "Take a virtual tour an Xperience camp in immersive 360°"
       }
     };
     
