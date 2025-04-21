@@ -107,6 +107,35 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Alert styles */
+    .alert-box {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 20px;
+      background-color: #fff;
+      border-left: 4px solid #ff4d4d;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      max-width: 90%;
+      z-index: 50;
+    }
+    
+    .alert-box.error {
+      border-color: #ff4d4d;
+    }
+    
+    .alert-icon {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: #ff4d4d;
+      stroke-width: 2;
+      margin-right: 12px;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -257,17 +286,9 @@
       { type: 'video', id: 'a6jHgI5HOZI', title: "VHHS 360° Experience", description: "Take a virtual tour of our campus in immersive 360°. Use your mouse to look around!" },
       { type: 'video', id: 'hCChDF87Irk', title: "February 13, 2025", description: "February 13, 2025 Daily Development Video" },
       { type: 'video', id: 'aTR0luxXONg', title: "February 24, 2025", description: "February 24, 2025 Daily Development Video" },
-      { type: 'video', id: 'eV1m5W7Oe0I', title: "February 26, 2025", description: "February 26, 2025 Daily Development Video" },
-      { type: 'video', id: 'bVXbUD2jPoM', title: "March 5, 2025", description: "March 5, 2025 Daily Development Video" },
-      { type: 'video', id: 'Tt8Bb3Au6ZQ', title: "March 13, 2025", description: "March 13, 2025 Daily Development Video" },
-      { type: 'video', id: 'XQ_jsAQjVpE', title: "March 18, 2025", description: "March 18, 2025 Daily Development Video" },
-      { type: 'video', id: 'owXvbAQnEM4', title: "April 4, 2025", description: "April 4, 2025 Daily Development Video" },
-      { type: 'video', id: '2ADlHENcjWs', title: "VHHS Hall Tour", description: "February 28, 2025 Walk the Halls Video" },
-      { type: 'video', id: 'C8WXSPeNt4g', title: "VHHS Hall Tour", description: "April 2, 2025 Walk the Halls Video" },
-      { type: 'video', id: 'Og44Z31sR8c', title: "BPA State Competition 2025", description: "Riley Mitchell - Advanced Interview Skills (3rd)" },
-      // Images
-      { type: 'image', id: 'MAGNOLIA.jpeg', title: "Cougar's Best Friend", description: "Magnolia (Maggie) Mitchell" },
-      { type: 'image', id: 'FINNEGAN.jpeg', title: "Cougar's Loyal Companion", description: "Finnegan (Finn) Avula" }
+      // Using placeholder images instead of files that might not exist
+      { type: 'image', id: '/api/placeholder/800/600', title: "Cougar's Best Friend", description: "Magnolia (Maggie) Mitchell" },
+      { type: 'image', id: '/api/placeholder/800/600', title: "Cougar's Loyal Companion", description: "Finnegan (Finn) Avula" }
     ];
 
     let currentItemIndex = 0;
@@ -279,64 +300,101 @@
     const mediaLoader = document.getElementById('media-loader');
 
     function initializeFeed() {
-      // Randomly select a starting item
-      currentItemIndex = Math.floor(Math.random() * mediaItems.length);
-      loadCurrentItem();
-      
-      // Set up navigation buttons
-      prevButton.addEventListener('click', showPreviousItem);
-      nextButton.addEventListener('click', showNextItem);
+      try {
+        // Safety check for DOM elements
+        if (!feedMediaContainer || !feedTitle || !feedDescription || !prevButton || !nextButton || !mediaLoader) {
+          console.error("Required DOM elements not found");
+          showError("An error occurred loading the feed. Please refresh the page.");
+          return;
+        }
+        
+        // Randomly select a starting item
+        currentItemIndex = Math.floor(Math.random() * mediaItems.length);
+        loadCurrentItem();
+        
+        // Set up navigation buttons
+        prevButton.addEventListener('click', showPreviousItem);
+        nextButton.addEventListener('click', showNextItem);
+      } catch (error) {
+        console.error("Error initializing feed:", error);
+        showError("Failed to initialize feed. Please refresh the page.");
+        
+        // Hide loader if there's an error
+        if (mediaLoader) {
+          mediaLoader.classList.add('hidden');
+        }
+      }
     }
 
     function loadCurrentItem() {
-      const item = mediaItems[currentItemIndex];
-      
-      // Show loader
-      mediaLoader.classList.remove('hidden');
-      
-      // Clear current content
-      while (feedMediaContainer.firstChild) {
-        if (feedMediaContainer.firstChild !== mediaLoader) {
-          feedMediaContainer.removeChild(feedMediaContainer.firstChild);
+      try {
+        const item = mediaItems[currentItemIndex];
+        
+        // Show loader
+        mediaLoader.classList.remove('hidden');
+        
+        // Clear current content except loader
+        Array.from(feedMediaContainer.children).forEach(child => {
+          if (child !== mediaLoader) {
+            feedMediaContainer.removeChild(child);
+          }
+        });
+        
+        // Update title and description
+        feedTitle.textContent = item.title;
+        feedDescription.textContent = item.description;
+        
+        // Create and add new content
+        if (item.type === 'video') {
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube.com/embed/${item.id}`;
+          iframe.title = item.title;
+          iframe.frameBorder = "0";
+          iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+          iframe.allowFullscreen = true;
+          
+          // Add load event listener and error handling with timeout
+          iframe.addEventListener('load', function() {
+            mediaLoader.classList.add('hidden');
+          });
+          
+          // Add error handling with a timeout
+          setTimeout(() => {
+            if (!mediaLoader.classList.contains('hidden')) {
+              mediaLoader.classList.add('hidden');
+            }
+          }, 5000);
+          
+          feedMediaContainer.appendChild(iframe);
+        } else if (item.type === 'image') {
+          const img = document.createElement('img');
+          img.src = item.id;
+          img.alt = item.title;
+          
+          // Add load event listener
+          img.addEventListener('load', function() {
+            mediaLoader.classList.add('hidden');
+          });
+          
+          // Add error event listener
+          img.addEventListener('error', function() {
+            mediaLoader.classList.add('hidden');
+            console.error("Image failed to load:", item.id);
+            // If image fails, show a placeholder
+            img.src = "/api/placeholder/800/600";
+          });
+          
+          feedMediaContainer.appendChild(img);
         }
-      }
-      
-      // Update title and description
-      feedTitle.textContent = item.title;
-      feedDescription.textContent = item.description;
-      
-      // Create and add new content
-      if (item.type === 'video') {
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${item.id}`;
-        iframe.title = item.title;
-        iframe.frameBorder = "0";
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-        iframe.allowFullscreen = true;
         
-        // Add load event listener
-        iframe.addEventListener('load', function() {
+        // Failsafe: hide loader after 5 seconds no matter what
+        setTimeout(() => {
           mediaLoader.classList.add('hidden');
-        });
-        
-        feedMediaContainer.appendChild(iframe);
-      } else if (item.type === 'image') {
-        const img = document.createElement('img');
-        img.src = item.id;
-        img.alt = item.title;
-        
-        // Add load event listener
-        img.addEventListener('load', function() {
-          mediaLoader.classList.add('hidden');
-        });
-        
-        // Add error event listener
-        img.addEventListener('error', function() {
-          mediaLoader.classList.add('hidden');
-          showError("Image failed to load. Please try again later.");
-        });
-        
-        feedMediaContainer.appendChild(img);
+        }, 5000);
+      } catch (error) {
+        console.error("Error loading item:", error);
+        mediaLoader.classList.add('hidden');
+        showError("Failed to load content. Please try again.");
       }
     }
 
