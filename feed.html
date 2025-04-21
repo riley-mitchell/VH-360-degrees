@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed - VH360°</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .feed-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .feed-media {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      position: relative;
+    }
+    
+    .feed-media iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .feed-media img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .feed-info {
+      background-color: white;
+      padding: 1rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    
+    .navigation-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #333;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    
+    .navigation-button:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .prev-button {
+      left: 20px;
+    }
+    
+    .next-button {
+      right: 20px;
+    }
+    
+    .media-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      z-index: 5;
+    }
+    
+    .media-loader.hidden {
+      display: none;
+    }
+    
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+  <!-- Navigation Bar -->
+  <nav class="bg-white shadow-md px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <h1 class="text-3xl font-bold gradient-text">VH360°</h1>
+      </div>
+      <div class="flex items-center space-x-6">
+        <div class="hidden md:flex items-center space-x-6 mr-4">
+          <a href="index.html" class="text-gray-600 hover:text-primary-color transition-colors">Home</a>
+          <a href="content.html" class="text-gray-600 hover:text-primary-color transition-colors">Content</a>
+          <a href="feed.html" class="text-gray-600 hover:text-primary-color transition-colors font-medium">Feed</a>
+          <a href="dashboard.html" class="text-gray-600 hover:text-primary-color transition-colors">Dashboard</a>
+          <a href="contact.html" class="text-gray-600 hover:text-primary-color transition-colors">Contact</a>
+        </div>
+        <div id="g_id_signin" data-type="standard"></div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="space-y-8">
+      <div class="text-center space-y-4">
+        <h2 class="text-4xl font-bold text-gray-800">
+          Cougar Community Feed
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Browse through highlights and moments from Vernon Hills High School.
+        </p>
+      </div>
+      
+      <!-- Feed Display -->
+      <div class="feed-container">
+        <div class="feed-media" id="feed-media-container">
+          <div class="media-loader" id="media-loader">
+            <div class="loader"></div>
+          </div>
+          <!-- Media content will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="navigation-button prev-button" id="prev-button">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </div>
+        
+        <div class="navigation-button next-button" id="next-button">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        
+        <div class="feed-info">
+          <h3 class="text-xl font-semibold text-gray-800" id="feed-title">Loading...</h3>
+          <p class="text-gray-600" id="feed-description">Please wait while we load content...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="mt-auto py-6 text-center text-gray-600">
+    <p>© 2025 VH360° - The Original Social Experience</p>
+  </footer>
+  
+  <script>
+    // Wait for DOM to load and check auth status
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("VH360° - Feed page initialized");
+      checkAuthAndRedirect();
+      initializeFeed();
+    });
 
+    // Check if user is authenticated and redirect if needed
+    function checkAuthAndRedirect() {
+      try {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const currentPage = window.location.pathname.split('/').pop();
+        
+        if (user && user.email) {
+          // If user is logged in and on index, redirect to dashboard
+          if (currentPage === "index.html" || currentPage === "") {
+            window.location.href = "dashboard.html";
+          }
+        } else {
+          // If user is not logged in and trying to access dashboard, redirect to index
+          if (currentPage === "dashboard.html") {
+            window.location.href = "index.html";
+          }
+        }
+      } catch (error) {
+        console.error("Error checking auth:", error);
+      }
+    }
+
+    // Function to handle dashboard access
+    function checkDashboardAccess(event) {
+      event.preventDefault();
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user.email) {
+        window.location.href = "dashboard.html";
+      } else {
+        showError("Please sign in to access the dashboard");
+      }
+    }
+
+    // Google Sign-In callback function
+    function handleCredentialResponse(response) {
+      console.log("Encoded JWT ID Token: " + response.credential);
+      
+      try {
+        const userInfo = parseJwt(response.credential);
+        console.log("User Info:", userInfo);
+        
+        if (userInfo.email && userInfo.email.endsWith("@vhhscougars.org")) {
+          console.log("Login successful:", userInfo);
+          // Save user info to localStorage
+          localStorage.setItem("user", JSON.stringify({
+            name: userInfo.name,
+            email: userInfo.email,
+            picture: userInfo.picture
+          }));
+          
+          // Redirect to dashboard
+          window.location.href = "dashboard.html";
+        } else {
+          showError("Only @vhhscougars.org emails are allowed.");
+        }
+      } catch (error) {
+        console.error("Error processing sign-in:", error);
+        showError("An error occurred during sign-in. Please try again.");
+      }
+    }
+
+    // JWT parsing function
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      return JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    }
+
+    // Error handling function
+    function showError(message) {
+      const errorAlert = document.createElement('div');
+      errorAlert.className = 'alert-box error';
+      errorAlert.innerHTML = `
+        <svg class="alert-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p>${message}</p>
+      `;
+      
+      document.body.appendChild(errorAlert);
+      
+      // Remove error after 5 seconds
+      setTimeout(() => {
+        errorAlert.remove();
+      }, 5000);
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem("user");
+      window.location.href = "index.html";
+    }
+
+    // Feed functionality
+    const mediaItems = [
+      // Videos
+      { type: 'video', id: 'a6jHgI5HOZI', title: "VHHS 360° Experience", description: "Take a virtual tour of our campus in immersive 360°. Use your mouse to look around!" },
+      { type: 'video', id: 'hCChDF87Irk', title: "February 13, 2025", description: "February 13, 2025 Daily Development Video" },
+      { type: 'video', id: 'aTR0luxXONg', title: "February 24, 2025", description: "February 24, 2025 Daily Development Video" },
+      { type: 'video', id: 'eV1m5W7Oe0I', title: "February 26, 2025", description: "February 26, 2025 Daily Development Video" },
+      { type: 'video', id: 'bVXbUD2jPoM', title: "March 5, 2025", description: "March 5, 2025 Daily Development Video" },
+      { type: 'video', id: 'Tt8Bb3Au6ZQ', title: "March 13, 2025", description: "March 13, 2025 Daily Development Video" },
+      { type: 'video', id: 'XQ_jsAQjVpE', title: "March 18, 2025", description: "March 18, 2025 Daily Development Video" },
+      { type: 'video', id: 'owXvbAQnEM4', title: "April 4, 2025", description: "April 4, 2025 Daily Development Video" },
+      { type: 'video', id: '2ADlHENcjWs', title: "VHHS Hall Tour", description: "February 28, 2025 Walk the Halls Video" },
+      { type: 'video', id: 'C8WXSPeNt4g', title: "VHHS Hall Tour", description: "April 2, 2025 Walk the Halls Video" },
+      { type: 'video', id: 'Og44Z31sR8c', title: "BPA State Competition 2025", description: "Riley Mitchell - Advanced Interview Skills (3rd)" },
+      // Images
+      { type: 'image', id: 'MAGNOLIA.jpeg', title: "Cougar's Best Friend", description: "Magnolia (Maggie) Mitchell" },
+      { type: 'image', id: 'FINNEGAN.jpeg', title: "Cougar's Loyal Companion", description: "Finnegan (Finn) Avula" }
+    ];
+
+    let currentItemIndex = 0;
+    const feedMediaContainer = document.getElementById('feed-media-container');
+    const feedTitle = document.getElementById('feed-title');
+    const feedDescription = document.getElementById('feed-description');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+    const mediaLoader = document.getElementById('media-loader');
+
+    function initializeFeed() {
+      // Randomly select a starting item
+      currentItemIndex = Math.floor(Math.random() * mediaItems.length);
+      loadCurrentItem();
+      
+      // Set up navigation buttons
+      prevButton.addEventListener('click', showPreviousItem);
+      nextButton.addEventListener('click', showNextItem);
+    }
+
+    function loadCurrentItem() {
+      const item = mediaItems[currentItemIndex];
+      
+      // Show loader
+      mediaLoader.classList.remove('hidden');
+      
+      // Clear current content
+      while (feedMediaContainer.firstChild) {
+        if (feedMediaContainer.firstChild !== mediaLoader) {
+          feedMediaContainer.removeChild(feedMediaContainer.firstChild);
+        }
+      }
+      
+      // Update title and description
+      feedTitle.textContent = item.title;
+      feedDescription.textContent = item.description;
+      
+      // Create and add new content
+      if (item.type === 'video') {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${item.id}`;
+        iframe.title = item.title;
+        iframe.frameBorder = "0";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        
+        // Add load event listener
+        iframe.addEventListener('load', function() {
+          mediaLoader.classList.add('hidden');
+        });
+        
+        feedMediaContainer.appendChild(iframe);
+      } else if (item.type === 'image') {
+        const img = document.createElement('img');
+        img.src = item.id;
+        img.alt = item.title;
+        
+        // Add load event listener
+        img.addEventListener('load', function() {
+          mediaLoader.classList.add('hidden');
+        });
+        
+        // Add error event listener
+        img.addEventListener('error', function() {
+          mediaLoader.classList.add('hidden');
+          showError("Image failed to load. Please try again later.");
+        });
+        
+        feedMediaContainer.appendChild(img);
+      }
+    }
+
+    function showPreviousItem() {
+      currentItemIndex = (currentItemIndex - 1 + mediaItems.length) % mediaItems.length;
+      loadCurrentItem();
+    }
+
+    function showNextItem() {
+      currentItemIndex = (currentItemIndex + 1) % mediaItems.length;
+      loadCurrentItem();
+    }
+  </script>
+</body>
+</html>
