@@ -121,7 +121,7 @@
           <a href="index.html" class="text-gray-600 hover:text-primary-color transition-colors">Home</a>
           <a href="content.html" class="text-gray-600 hover:text-primary-color transition-colors">Content</a>
           <a href="feed.html" class="text-gray-600 hover:text-primary-color transition-colors font-medium">Feed</a>
-          <a href="dashboard.html" class="text-gray-600 hover:text-primary-color transition-colors">Dashboard</a>
+          <a href="#" onclick="checkDashboardAccess(event)" class="text-gray-600 hover:text-primary-color transition-colors">Dashboard</a>
           <a href="contact.html" class="text-gray-600 hover:text-primary-color transition-colors">Contact</a>
         </div>
         <div id="g_id_signin" data-type="standard"></div>
@@ -176,36 +176,13 @@
   </footer>
   
   <script>
-    // Wait for DOM to load and check auth status
+    // Wait for DOM to load
     document.addEventListener("DOMContentLoaded", function() {
       console.log("VH360° - Feed page initialized");
-      checkAuthAndRedirect();
       initializeFeed();
     });
 
     // Check if user is authenticated and redirect if needed
-    function checkAuthAndRedirect() {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const currentPage = window.location.pathname.split('/').pop();
-        
-        if (user && user.email) {
-          // If user is logged in and on index, redirect to dashboard
-          if (currentPage === "index.html" || currentPage === "") {
-            window.location.href = "dashboard.html";
-          }
-        } else {
-          // If user is not logged in and trying to access dashboard, redirect to index
-          if (currentPage === "dashboard.html") {
-            window.location.href = "index.html";
-          }
-        }
-      } catch (error) {
-        console.error("Error checking auth:", error);
-      }
-    }
-
-    // Function to handle dashboard access
     function checkDashboardAccess(event) {
       event.preventDefault();
       const user = JSON.parse(localStorage.getItem("user"));
@@ -272,12 +249,6 @@
       setTimeout(() => {
         errorAlert.remove();
       }, 5000);
-    }
-
-    // Logout function
-    function logout() {
-      localStorage.removeItem("user");
-      window.location.href = "index.html";
     }
 
     // Feed functionality
