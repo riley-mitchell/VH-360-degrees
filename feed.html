@@ -36,10 +36,13 @@
       border: none;
     }
     
+    /* Updated image styling to ensure proper centering and full visibility */
     .feed-media img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      display: block;
+      margin: 0 auto;
     }
     
     .feed-info {
@@ -369,6 +372,8 @@
           const img = document.createElement('img');
           img.src = item.id;
           img.alt = item.title;
+          img.style.display = "block"; // Ensure block display
+          img.style.margin = "0 auto"; // Center horizontally
           
           // Add load event listener
           img.addEventListener('load', function() {
