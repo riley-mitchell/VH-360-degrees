@@ -285,9 +285,9 @@
       { type: 'video', id: 'a6jHgI5HOZI', title: "VHHS 360° Experience", description: "Take a virtual tour of our campus in immersive 360°. Use your mouse to look around!" },
       { type: 'video', id: 'hCChDF87Irk', title: "February 13, 2025", description: "February 13, 2025 Daily Development Video" },
       { type: 'video', id: 'aTR0luxXONg', title: "February 24, 2025", description: "February 24, 2025 Daily Development Video" },
-      // Using placeholder images instead of files that might not exist
-      { type: 'image', id: '/api/placeholder/800/600', title: "Cougar's Best Friend", description: "Magnolia (Maggie) Mitchell" },
-      { type: 'image', id: '/api/placeholder/800/600', title: "Cougar's Loyal Companion", description: "Finnegan (Finn) Avula" }
+      // Using the GitHub image files
+      { type: 'image', id: 'MAGNOLIA.jpeg', title: "Cougar's Best Friend", description: "Magnolia (Maggie) Mitchell" },
+      { type: 'image', id: 'FINNEGAN.jpeg', title: "Cougar's Loyal Companion", description: "Finnegan (Finn) Avula" }
     ];
 
     let currentItemIndex = 0;
@@ -379,8 +379,11 @@
           img.addEventListener('error', function() {
             mediaLoader.classList.add('hidden');
             console.error("Image failed to load:", item.id);
-            // If image fails, show a placeholder
-            img.src = "/api/placeholder/800/600";
+            // If image fails, show a placeholder message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'p-4 bg-gray-800 text-white';
+            errorDiv.textContent = "Image could not be loaded";
+            feedMediaContainer.appendChild(errorDiv);
           });
           
           feedMediaContainer.appendChild(img);
